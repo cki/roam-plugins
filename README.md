@@ -75,8 +75,9 @@ document.getElementsByTagName("head")[0].appendChild(s);
 * Create a new block
 
 ** Type: **30 
+
 ** Type: Shift + Enter
 
 * Look in the javascript console for text starting with: "30-60-90:"
 
-* Send me the text :)
+* Send me a screenshot
