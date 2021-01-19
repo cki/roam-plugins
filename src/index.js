@@ -4,11 +4,9 @@ const ACTIVATE_TEXT = '**30';
 
 // type text
 async function typeText(element, text) {
-    for (let char of text) {
-        await userEvent.type(element, text, {
-            skipClick: true,
-        });
-    }
+    await userEvent.type(element, text, {
+        skipClick: true,
+    });
 }
 
 // format silly day
@@ -41,29 +39,39 @@ function formatDate(dateTS) {
 
 
 document.addEventListener('keydown', async (event) => {
+
     // silly computationally cheap test
     if (!(event.key === 'Enter' && event.shiftKey)) {
         return;
     }
+
+    console.log('30-60-90: detected Shift+Enter');
     
     // we want to do this while somebody is typing in a roam document
     if (!(document.activeElement.tagName === 'TEXTAREA')) {
         return;
     }
     
+    console.log('30-60-90: found textarea');
+
     const textArea = document.activeElement;
     const text = textArea.value;
     
     // does not contain our text
     if (!(text.startsWith('**30'))) return;
 
-    console.log('running 30-60-90');
+    console.log('30-60-90: found starting sequence');
+    
 
     // select ACTIVATE_TEXT
     textArea.setSelectionRange(0, ACTIVATE_TEXT.length);
     
     // delete the text
     typeText(textArea, "{backspace}");
+
+    console.log('30-60-90: deleted sequence');
+
+    console.log('30-60-90: entering dates');
 
     // Write the dates
     let str30 = formatDate(new Date().getTime() - 1000 * 60 * 24 * 30);
@@ -74,4 +82,5 @@ document.addEventListener('keydown', async (event) => {
     typeText(textArea, "[["+str60+"]] ");
     typeText(textArea, "[["+str90+"]] ");
 
+    console.log('30-60-90: done');
 });
